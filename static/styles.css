@@ -1,0 +1,15 @@
+body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.buffer {
+    height: 100px;
+}
+
+.left {
+    text-align: right;
+}
+
+.right {
+    text-align: left;
+}

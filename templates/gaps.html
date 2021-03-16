@@ -1,14 +1,50 @@
-<!DOCTYPE html>	
-<html>
-    <head>
-        <title>
-            I'm a title
-        </title>
-    </head>
-    <body>
-        <p id="sent1">I don't care!</p>
-        <p id="sent2">Subscribe for more skin care videos.</p>
-        <p id="sent3">There are 14 kittens in our care.</p>
-        <p id="sent4">We must proceed with the utmost care.</p>
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col left" id="sent_1_left">
+        I don't 
+    </div>
+    <div class="col-1 gap" id="sent_1_gap">
+        care
+    </div>
+    <div class="col right" id="sent_1_right">
+        !
+    </div>
+</div>
+<div class="row">
+    <div class="col left" id="sent_2_left">
+        Subscribe for more skin
+    </div>
+    <div class="col-1 gap" id="sent_2_gap">
+        care
+    </div>
+    <div class="col right" id="sent_2_right">
+        videos.
+    </div>
+</div>
+<div class="row">
+    <div class="col left" id="sent_3_left">
+        There are 14 kittens in our
+    </div>
+    <div class="col-1 gap" id="sent_3_gap">
+        care
+    </div>
+    <div class="col right" id="sent_3_right">
+        .
+    </div>
+</div>
+<div class="row">
+    <div class="col left" id="sent_4_left">
+        Do you even 
+    </div>
+    <div class="col-1 gap" id="sent_4_gap">
+        care
+    </div>
+    <div class="col right" id="sent_4_right">
+        about what I think?
+    </div>
+</div>
+
+{% endblock %}
