@@ -1,5 +1,5 @@
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, Iterator, List, Tuple
 
 
 class ProbabilityDistribution:
@@ -39,11 +39,24 @@ class ProbabilityDistribution:
 
 class Sentence:
     def __init__(self, words: List[str], distributions: List[ProbabilityDistribution]):
-        self.words = words
+        self.words = tuple(words)
         self.distributions = distributions
 
-    def __eq__(self, other: "Sentence"):
+    def __str__(self) -> str:
+        return " ".join(self.words)
+
+    def __eq__(self, other: "Sentence") -> bool:
         return self.words == other.words
+
+    def __hash__(self) -> int:
+        return hash(self.words)
+
+    def __iter__(self) -> Iterator[str]:
+        yield from self.words
+
+    def gapify(self, word: str) -> "Gap":
+        index = self.words.index(word)
+        return Gap(self, index)
 
 
 class Gap:
