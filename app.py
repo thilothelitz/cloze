@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 """
-Basic code explained here: https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
+Basic code explained here: 
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
+Use terminal command "flask run" for dev server
 """
 from flask import Flask, render_template
 app = Flask(__name__)
