@@ -1,8 +1,9 @@
 import argparse
 import random
+import sys
 from collections import defaultdict
 from contextlib import ExitStack
-from typing import Dict, Iterator, List, Set, TextIO
+from typing import Dict, Iterator, List, Optional, Set, TextIO
 
 from bundledgaps import (
     ProbabilityDistribution,
@@ -40,11 +41,19 @@ def load_corpus(file: TextIO) -> Dict[str, Set[Sentence]]:
     return corpus
 
 
-def extract_corpora(fastsub_file: TextIO, words: List[str]):
+def extract_corpora(
+    fastsub_file: TextIO,
+    words: List[str],
+    outfile_prefix: Optional[str],
+):
     with ExitStack() as stack:
         files = [
             stack.enter_context(
-                open(f"{fastsub_file.name}.{word}", "w", encoding="utf-8")
+                open(
+                    f"{outfile_prefix or fastsub_file.name}.{word}",
+                    "w",
+                    encoding="utf-8",
+                )
             )
             for word in words
         ]
@@ -54,7 +63,11 @@ def extract_corpora(fastsub_file: TextIO, words: List[str]):
                     files[i].write(sentence.to_fastsubs())
 
 
-def generate_bundles(file: TextIO, word: str, bundle_size: int):
+def generate_bundles(
+    file: TextIO,
+    word: str,
+    bundle_size: int,
+):
     corpus = load_corpus(file)
     sentences = list(corpus[word])
     if len(sentences) < bundle_size:
@@ -76,11 +89,22 @@ def get_argument_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     generate_parser = subparsers.add_parser("extract_corpora")
-    generate_parser.add_argument("file", type=argparse.FileType("r", encoding="utf-8"))
+    generate_parser.add_argument(
+        "file",
+        type=argparse.FileType("r", encoding="utf-8"),
+        nargs="?",
+        default=sys.stdin,
+    )
     generate_parser.add_argument("--words", "-w", nargs="*")
+    generate_parser.add_argument("--outfile-prefix", "-o")
 
     generate_parser = subparsers.add_parser("generate_bundles")
-    generate_parser.add_argument("file", type=argparse.FileType("r", encoding="utf-8"))
+    generate_parser.add_argument(
+        "file",
+        type=argparse.FileType("r", encoding="utf-8"),
+        nargs="?",
+        default=sys.stdin,
+    )
     generate_parser.add_argument("--word", "-w", required=True)
     generate_parser.add_argument("--bundle-size", "-n", type=int, required=True)
 
@@ -91,6 +115,6 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     if args.command == "extract_corpora":
-        extract_corpora(args.file, args.words)
+        extract_corpora(args.file, args.words, args.outfile_prefix)
     if args.command == "generate_bundles":
         generate_bundles(args.file, args.word, args.bundle_size)
