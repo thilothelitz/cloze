@@ -35,7 +35,6 @@ class ProbabilityDistribution:
         return self[word] - max_prob
 
     @classmethod
-    @property
     def zero(cls):
         return cls({}, unk_probability=0)
 
@@ -100,9 +99,9 @@ def joint_disambiguation_measure(bundle: List[Gap]):
     gap_word = bundle[0].gap_word
     if not all(gap.gap_word == gap_word for gap in bundle):
         raise ValueError("All gaps in a bundle must have the same gap word")
-    joint_distribution = sum(
-        [gap.gap_distribution for gap in bundle], start=ProbabilityDistribution.zero
-    )
+    joint_distribution = ProbabilityDistribution.zero()
+    for gap in bundle:
+        joint_distribution += gap.gap_distribution
     return joint_distribution.disambiguation_measure(gap_word)
 
 
