@@ -22,6 +22,9 @@ class ProbabilityDistribution:
     def __getitem__(self, word: str):
         return self._probabilities.get(word, self._unk_probability)
 
+    def __iter__(self) -> Iterator[Tuple[str, float]]:
+        yield from self._probabilities.items()
+
     def disambiguation_measure(self, word) -> float:
         max_prob = self._unk_probability
         for w, p in self._probabilities.items():
@@ -54,9 +57,21 @@ class Sentence:
     def __iter__(self) -> Iterator[str]:
         yield from self.words
 
+    def __contains__(self, word: str) -> bool:
+        return word in self.words
+
     def gapify(self, word: str) -> "Gap":
         index = self.words.index(word)
         return Gap(self, index)
+
+    def to_fastsubs(self) -> str:
+        return '\n'.join(
+            word + '\t' + '\t'.join(
+                f'{subword} {probability}'
+                for subword, probability in distribution
+            )
+            for word, distribution in zip(self.words, self.distributions)
+        ) + '\n</s>\n'
 
 
 class Gap:
