@@ -2,6 +2,14 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
+.incorrect {
+    color: #ff955f;
+}
+
+.correct {
+    color: #a6c64c;
+}
+
 .buffer {
     height: 100px;
 }
