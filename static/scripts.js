@@ -40,34 +40,36 @@ async function getNewBundle() {
     bundlesDiv = document.getElementsByClassName("bundles")[0]
     bundlesDiv.append(bundleDiv)
 
-    rowDiv = document.createElement("div");
-    rowDiv.className = "row";
-    bundleDiv.append(rowDiv);
-
-    colDiv = document.createElement("div");
-    colDiv.className = "col left";
-    colDiv.innerHTML = bundle.sent_1_left;
-    rowDiv.append(colDiv);
-
-    colDiv = document.createElement("div");
-    colDiv.className = "col-1 gap";
-    colDiv.innerHTML = bundle.sent_1_gap;
-    rowDiv.append(colDiv);
-
-    colDiv = document.createElement("div");
-    colDiv.className = "col right";
-    colDiv.innerHTML = bundle.sent_1_right;
-    rowDiv.append(colDiv);
-
     // For loop
     // Iterate over bundle object
     // Skip bundle.target
     // ...
     // Profit
+
+    // rowDiv = document.createElement("div");
+    // rowDiv.className = "row";
+    // bundleDiv.append(rowDiv);
+
+    // colDiv = document.createElement("div");
+    // colDiv.className = "col left";
+    // colDiv.innerHTML = bundle.sent_1_left;
+    // rowDiv.append(colDiv);
+
+    // colDiv = document.createElement("div");
+    // colDiv.className = "col-1 gap";
+    // colDiv.innerHTML = bundle.sent_1_gap;
+    // rowDiv.append(colDiv);
+
+    // colDiv = document.createElement("div");
+    // colDiv.className = "col right";
+    // colDiv.innerHTML = bundle.sent_1_right;
+    // rowDiv.append(colDiv);
+
+    
 }
 
 function makeRow(cols) {
-    // Take contents of the 3 parts of a row (array) and spits out row element
+    // Take contents of the 3 parts of a row (array) and spit out row element
     rowDiv = document.createElement("div");
     rowDiv.className = "row";
 
