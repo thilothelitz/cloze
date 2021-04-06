@@ -37,7 +37,7 @@ async function getNewBundle() {
 
     bundleDiv = document.createElement("div");
     bundleDiv.className = "bundle";
-    bundlesDiv = document.getElementsByClassName("bundles")
+    bundlesDiv = document.getElementsByClassName("bundles")[0]
     bundlesDiv.append(bundleDiv)
 
     rowDiv = document.createElement("div");
@@ -45,18 +45,18 @@ async function getNewBundle() {
     bundleDiv.append(rowDiv)
 
     colDiv = document.createElement("div");
-    rowDiv.className = "col left";
-    rowDiv.innerHTML = bundle.sent_1_left;
+    colDiv.className = "col left";
+    colDiv.innerHTML = bundle.sent_1_left;
     rowDiv.append(colDiv)
 
     colDiv = document.createElement("div");
-    rowDiv.className = "col-1 gap";
-    rowDiv.innerHTML = bundle.sent_1_gap;
+    colDiv.className = "col-1 gap";
+    colDiv.innerHTML = bundle.sent_1_gap;
     rowDiv.append(colDiv)
 
     colDiv = document.createElement("div");
-    rowDiv.className = "col right";
-    rowDiv.innerHTML = bundle.sent_1_right;
+    colDiv.className = "col right";
+    colDiv.innerHTML = bundle.sent_1_right;
     rowDiv.append(colDiv)
 
     // document.append(bundleDiv)
