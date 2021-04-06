@@ -37,35 +37,19 @@ async function getNewBundle() {
 
     bundleDiv = document.createElement("div");
     bundleDiv.className = "bundle";
-    bundlesDiv = document.getElementsByClassName("bundles")[0]
-    bundlesDiv.append(bundleDiv)
+    bundlesDiv = document.getElementsByClassName("bundles")[0];
+    bundlesDiv.append(bundleDiv);
 
-    // For loop
-    // Iterate over bundle object
-    // Skip bundle.target
-    // ...
-    // Profit
+    // Prepare columns, remove target word
+    let cols = Object.values(bundle).slice(1);
 
-    // rowDiv = document.createElement("div");
-    // rowDiv.className = "row";
-    // bundleDiv.append(rowDiv);
-
-    // colDiv = document.createElement("div");
-    // colDiv.className = "col left";
-    // colDiv.innerHTML = bundle.sent_1_left;
-    // rowDiv.append(colDiv);
-
-    // colDiv = document.createElement("div");
-    // colDiv.className = "col-1 gap";
-    // colDiv.innerHTML = bundle.sent_1_gap;
-    // rowDiv.append(colDiv);
-
-    // colDiv = document.createElement("div");
-    // colDiv.className = "col right";
-    // colDiv.innerHTML = bundle.sent_1_right;
-    // rowDiv.append(colDiv);
-
-    
+    for (let i = 0; i < 4; i++) {
+        // Iterate through 0-2, 3-5, 6-8, 9-11
+        startIndex = 3 * i
+        colsForOneRow = [cols[startIndex], cols[startIndex + 1], cols[startIndex + 2]]
+        rowDiv = makeRow(colsForOneRow)
+        bundleDiv.append(rowDiv)
+    }
 }
 
 function makeRow(cols) {
