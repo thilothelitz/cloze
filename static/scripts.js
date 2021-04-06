@@ -42,58 +42,54 @@ async function getNewBundle() {
 
     rowDiv = document.createElement("div");
     rowDiv.className = "row";
-    bundleDiv.append(rowDiv)
+    bundleDiv.append(rowDiv);
 
     colDiv = document.createElement("div");
     colDiv.className = "col left";
     colDiv.innerHTML = bundle.sent_1_left;
-    rowDiv.append(colDiv)
+    rowDiv.append(colDiv);
 
     colDiv = document.createElement("div");
     colDiv.className = "col-1 gap";
     colDiv.innerHTML = bundle.sent_1_gap;
-    rowDiv.append(colDiv)
+    rowDiv.append(colDiv);
 
     colDiv = document.createElement("div");
     colDiv.className = "col right";
     colDiv.innerHTML = bundle.sent_1_right;
-    rowDiv.append(colDiv)
+    rowDiv.append(colDiv);
 
-    // document.append(bundleDiv)
-    // bundleDiv.append(rowDiv)
-    // rowDiv.append(leftColDiv)
-    // rowDiv.append(midColDiv)
-    // rowDiv.append(rightColDiv)
+    // For loop
+    // Iterate over bundle object
+    // Skip bundle.target
+    // ...
+    // Profit
+}
 
-    
+function makeRow(cols) {
+    // Take contents of the 3 parts of a row (array) and spits out row element
+    rowDiv = document.createElement("div");
+    rowDiv.className = "row";
 
-    // sent1Left = document.getElementById("sent_1_left")
-    // sent1Left.innerHTML = bundle.sent_1_left
-    // sent1Gap = document.getElementById("sent_1_gap")
-    // sent1Gap.innerHTML = bundle.sent_1_gap
-    // sent1Right = document.getElementById("sent_1_right")
-    // sent1Right.innerHTML = bundle.sent_1_right
+    // Make col elements with correct classnames and append to row
+    for (let i = 0; i < 3; i++) {
+        colDiv = document.createElement("div");
+        switch (i) {
+            case 0:
+                colDiv.className = "col left";
+                break;
+            case 1:
+                colDiv.className = "col-1 gap";
+                break;
+            case 2:
+                colDiv.className = "col right";
+                break;
+        }
+        colDiv.innerHTML = cols[i];
+        rowDiv.append(colDiv);
+    }
 
-    // sent2Left = document.getElementById("sent_2_left")
-    // sent2Left.innerHTML = bundle.sent_2_left
-    // sent2Gap = document.getElementById("sent_2_gap")
-    // sent2Gap.innerHTML = bundle.sent_2_gap
-    // sent2Right = document.getElementById("sent_2_right")
-    // sent2Right.innerHTML = bundle.sent_2_right
-
-    // sent3Left = document.getElementById("sent_3_left")
-    // sent3Left.innerHTML = bundle.sent_3_left
-    // sent3Gap = document.getElementById("sent_3_gap")
-    // sent3Gap.innerHTML = bundle.sent_3_gap
-    // sent3Right = document.getElementById("sent_3_right")
-    // sent3Right.innerHTML = bundle.sent_3_right
-
-    // sent4Left = document.getElementById("sent_4_left")
-    // sent4Left.innerHTML = bundle.sent_4_left
-    // sent4Gap = document.getElementById("sent_4_gap")
-    // sent4Gap.innerHTML = bundle.sent_4_gap
-    // sent4Right = document.getElementById("sent_4_right")
-    // sent4Right.innerHTML = bundle.sent_4_right
+    return rowDiv;
 }
 
 function sleep(ms) {
