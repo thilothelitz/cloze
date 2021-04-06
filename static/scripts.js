@@ -37,7 +37,7 @@ async function getNewBundle() {
 
     bundleDiv = document.createElement("div");
     bundleDiv.className = "bundle";
-    document.append(bundleDiv)
+    document.body.append(bundleDiv)
 
     rowDiv = document.createElement("div");
     rowDiv.className = "row";
