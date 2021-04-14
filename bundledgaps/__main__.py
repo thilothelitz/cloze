@@ -1,4 +1,5 @@
 import argparse
+import math
 import random
 import sys
 from collections import defaultdict
@@ -44,6 +45,7 @@ def load_corpus(file: TextIO) -> Dict[str, Set[Sentence]]:
 def extract_corpora(
     fastsub_file: TextIO,
     words: List[str],
+    max_sentences: int,
     outfile_prefix: Optional[str],
 ):
     with ExitStack() as stack:
@@ -57,10 +59,14 @@ def extract_corpora(
             )
             for word in words
         ]
+        counts = {word: 0 for word in words}
         for sentence in parse_sentences(fastsub_file):
             for i, word in enumerate(words):
+                if counts[word] >= max_sentences:
+                    continue
                 if word in sentence:
                     files[i].write(sentence.to_fastsubs())
+                    counts[word] += 1
 
 
 def generate_bundles(
@@ -96,6 +102,7 @@ def get_argument_parser() -> argparse.ArgumentParser:
         default=sys.stdin,
     )
     generate_parser.add_argument("--words", "-w", nargs="*")
+    generate_parser.add_argument("--max-sentences", "-s", type=int, default=math.inf)
     generate_parser.add_argument("--outfile-prefix", "-o")
 
     generate_parser = subparsers.add_parser("generate_bundles")
@@ -115,6 +122,15 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     if args.command == "extract_corpora":
-        extract_corpora(args.file, args.words, args.outfile_prefix)
+        extract_corpora(
+            fastsub_file=args.file,
+            words=args.words,
+            max_sentences=args.max_sentences,
+            outfile_prefix=args.outfile_prefix,
+        )
     if args.command == "generate_bundles":
-        generate_bundles(args.file, args.word, args.bundle_size)
+        generate_bundles(
+            file=args.file,
+            word=args.word,
+            bundle_size=args.bundle_size,
+        )
