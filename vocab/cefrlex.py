@@ -30,7 +30,7 @@ if __name__ == "__main__":
     word_levels = {}
     for row in csv.DictReader(sys.stdin, delimiter="\t"):
         word = row["word"]
-        if "_" in word:
+        if len(word) <= 1 or not word.isalpha():
             continue
         tag = row["tag"]
         if args.tags is not None and tag not in args.tags:
