@@ -2,6 +2,10 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
+.bundle {
+    padding: 20px;
+}
+
 .incorrect {
     color: #ff955f;
 }

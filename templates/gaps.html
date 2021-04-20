@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
 {% block main %}
+
+<p>What word belongs in the gap?</p>
+<input type="text" id="guess" autofocus>
+
+<div class="buffer"></div>
+
 <div class="bundles">
     <div class="bundle">
         <div class="row">
@@ -49,10 +55,5 @@
         </div>
     </div>
 </div>
-
-<div class="buffer"></div>
-
-<p>What word belongs in the gap?</p>
-<input type="text" id="guess" oninput="isCorrectGuess()" autofocus>
 
 {% endblock %}
