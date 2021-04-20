@@ -1,16 +1,18 @@
 targetWord = "care";
 
-// Does something everytime something is input into the guess field, typing
-// or copy-pasting or text-to-speech input
 //guess.oninput = isCorrectGuess();
 
-async function isCorrectGuess() {
-    if (guess.value.toLowerCase() === targetWord) {
-        alert("Wow you're fucking amazing");
-        sleep(1000)
-        getNewBundle()
+// Check input if user presses enter
+document.addEventListener("keydown", async function(event) {
+    if (event.key == "Enter") {
+        // No idea how js gets the "guess" element but it works?
+        if (guess.value.toLowerCase() === targetWord) {
+            alert("Wow you're fucking amazing");
+            sleep(1000);
+            getNewBundle();
+        }
     }
-}
+});
 
 async function getNewBundle() {
     let url = "/bundle";
@@ -38,7 +40,7 @@ async function getNewBundle() {
     bundleDiv = document.createElement("div");
     bundleDiv.className = "bundle";
     bundlesDiv = document.getElementsByClassName("bundles")[0];
-    bundlesDiv.append(bundleDiv);
+    bundlesDiv.prepend(bundleDiv);
 
     // Prepare columns, remove target word
     let cols = Object.values(bundle).slice(1);
