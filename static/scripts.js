@@ -44,9 +44,9 @@ async function getNewBundle() {
     let cols = Object.values(bundle).slice(1);
 
     for (let i = 0; i < 4; i++) {
-        // Iterate through 0-2, 3-5, 6-8, 9-11
-        startIndex = 3 * i
-        colsForOneRow = [cols[startIndex], cols[startIndex + 1], cols[startIndex + 2]]
+        // Iterate through 0-1, 2-3, 4-5, 6-7
+        startIndex = 2 * i
+        colsForOneRow = [cols[startIndex], cols[startIndex + 1]]
         rowDiv = makeRow(colsForOneRow)
         bundleDiv.append(rowDiv)
     }
@@ -63,15 +63,17 @@ function makeRow(cols) {
         switch (i) {
             case 0:
                 colDiv.className = "col left";
+                colDiv.innerHTML = cols[0];
                 break;
             case 1:
                 colDiv.className = "col-1 gap";
+                colDiv.innerHTML = targetWord;
                 break;
             case 2:
                 colDiv.className = "col right";
+                colDiv.innerHTML = cols[1];
                 break;
         }
-        colDiv.innerHTML = cols[i];
         rowDiv.append(colDiv);
     }
 

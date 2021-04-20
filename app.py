@@ -25,14 +25,10 @@ def bundle():
 
 test_bundle = {"target": "fish",
                "sent_1_left": "Andrea got up early in the morning to",
-               "sent_1_gap": "fish",
                "sent_1_right": ".",
                "sent_2_left": "If you can see this, you're a good programmer and not a",
-               "sent_2_gap": "fish",
                "sent_2_right": ".",
                "sent_3_left": "Andrea got up early in the morning to",
-               "sent_3_gap": "fish",
                "sent_3_right": ".",
                "sent_4_left": "Andrea got up early in the morning to",
-               "sent_4_gap": "fish",
                "sent_4_right": "."}
