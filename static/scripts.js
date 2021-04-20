@@ -1,7 +1,5 @@
 targetWord = "care";
 
-//guess.oninput = isCorrectGuess();
-
 // Check input if user presses enter
 document.addEventListener("keydown", async function(event) {
     if (event.key == "Enter") {
