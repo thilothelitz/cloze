@@ -1,16 +1,13 @@
-targetWord = "care";
+let targetWord = "care";
+let tries = 0;
+let successes = 0;
 
-// Does something everytime something is input into the guess field, typing
-// or copy-pasting or text-to-speech input
-//guess.oninput = isCorrectGuess();
-
-async function isCorrectGuess() {
-    if (guess.value.toLowerCase() === targetWord) {
-        alert("Wow you're fucking amazing");
-        sleep(1000)
-        getNewBundle()
+// Check input if user presses enter
+document.addEventListener("keydown", async function(event) {
+    if (event.key == "Enter") {
+        evaluate();
     }
-}
+});
 
 async function getNewBundle() {
     let url = "/bundle";
@@ -29,39 +26,97 @@ async function getNewBundle() {
     // Expected JSON structure example:
     // bundle.target = "care"
     // bundle.sent_1_left = "I don't"
-    // bundle.sent_1_gap = "care"
     // bundle.sent_1_right = "!"
     // And so on for all 4 sentences
 
-    targetWord = bundle.target
+    targetWord = bundle.target;
 
-    sent1Left = document.getElementById("sent_1_left")
-    sent1Left.innerHTML = bundle.sent_1_left
-    sent1Gap = document.getElementById("sent_1_gap")
-    sent1Gap.innerHTML = bundle.sent_1_gap
-    sent1Right = document.getElementById("sent_1_right")
-    sent1Right.innerHTML = bundle.sent_1_right
+    bundleDiv = document.createElement("div");
+    bundleDiv.className = "bundle";
+    bundlesDiv = document.getElementsByClassName("bundles")[0];
+    bundlesDiv.prepend(bundleDiv);
 
-    sent2Left = document.getElementById("sent_2_left")
-    sent2Left.innerHTML = bundle.sent_2_left
-    sent2Gap = document.getElementById("sent_2_gap")
-    sent2Gap.innerHTML = bundle.sent_2_gap
-    sent2Right = document.getElementById("sent_2_right")
-    sent2Right.innerHTML = bundle.sent_2_right
+    // Prepare columns, remove target word
+    let cols = Object.values(bundle).slice(1);
 
-    sent3Left = document.getElementById("sent_3_left")
-    sent3Left.innerHTML = bundle.sent_3_left
-    sent3Gap = document.getElementById("sent_3_gap")
-    sent3Gap.innerHTML = bundle.sent_3_gap
-    sent3Right = document.getElementById("sent_3_right")
-    sent3Right.innerHTML = bundle.sent_3_right
+    for (let i = 0; i < 4; i++) {
+        // Iterate through 0-1, 2-3, 4-5, 6-7
+        startIndex = 2 * i
+        colsForOneRow = [cols[startIndex], cols[startIndex + 1]]
+        rowDiv = makeRow(colsForOneRow)
+        bundleDiv.append(rowDiv)
+    }
+}
 
-    sent4Left = document.getElementById("sent_4_left")
-    sent4Left.innerHTML = bundle.sent_4_left
-    sent4Gap = document.getElementById("sent_4_gap")
-    sent4Gap.innerHTML = bundle.sent_4_gap
-    sent4Right = document.getElementById("sent_4_right")
-    sent4Right.innerHTML = bundle.sent_4_right
+function evaluate() {
+    // Evaluate input and update class
+
+    // From the element, get text, lowercase it, remove whitespace
+    guess = document.getElementById("guess").value.toLowerCase().trim();
+    currentBundle = getTopMostBundle();
+
+    if (guess === targetWord) {
+        alert("Wow you're fucking amazing");
+        currentBundle.classList.add("correct")
+        successes++;
+    } else {
+        alert("Wow you're fucking dumb");
+        currentBundle.classList.add("incorrect");
+    }
+
+    tries++;
+    if (tries === 10) {
+        // TODO
+        alert("You've done 10 exercises and got " + successes + " right");
+        tries = 0;
+    }
+
+    // Put user input into gaps
+    gaps = currentBundle.getElementsByClassName("gap")
+    for (let gap of gaps) {
+        gap.innerHTML = guess
+    }
+
+    getNewBundle();
+}
+
+function changeTopBundleGapText(str) {
+    // Changes the text of all gaps in the topmost bundle to str
+    // Select topmost bundle with getTopMostBundle()
+}
+
+function getTopMostBundle() {
+    let bundles = document.getElementsByClassName('bundle');
+    let topMostBundle = bundles[0];
+    return topMostBundle;
+}
+
+function makeRow(cols) {
+    // Take contents of the 3 parts of a row (array) and spit out row element
+    rowDiv = document.createElement("div");
+    rowDiv.className = "row";
+
+    // Make col elements with correct classnames and append to row
+    for (let i = 0; i < 3; i++) {
+        colDiv = document.createElement("div");
+        switch (i) {
+            case 0:
+                colDiv.className = "col left";
+                colDiv.innerHTML = cols[0];
+                break;
+            case 1:
+                colDiv.className = "col-1 gap";
+                colDiv.innerHTML = "";
+                break;
+            case 2:
+                colDiv.className = "col right";
+                colDiv.innerHTML = cols[1];
+                break;
+        }
+        rowDiv.append(colDiv);
+    }
+
+    return rowDiv;
 }
 
 function sleep(ms) {

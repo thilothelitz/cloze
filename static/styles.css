@@ -1,13 +1,18 @@
 body {
     font-family: 'DM Sans', sans-serif;
+    background-color: #f8f6f7;
+}
+
+.bundle {
+    padding: 20px;
 }
 
 .incorrect {
-    color: #ff955f;
+    color: #c83c51;
 }
 
 .correct {
-    color: #a6c64c;
+    color: #2e744b;
 }
 
 .buffer {
