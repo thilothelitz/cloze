@@ -99,7 +99,7 @@ function makeRow(cols) {
                 break;
             case 1:
                 colDiv.className = "col-1 gap";
-                colDiv.innerHTML = targetWord;
+                colDiv.innerHTML = "";
                 break;
             case 2:
                 colDiv.className = "col right";
