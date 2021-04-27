@@ -43,8 +43,11 @@ def load_corpus(file: TextIO) -> Dict[str, Set[Sentence]]:
 
 
 def extract_corpora(
+    *,
     fastsub_file: TextIO,
     words: List[str],
+    preferred_vocabulary: List[str],
+    min_vocabulary_ratio: float,
     max_sentences: int,
     outfile_prefix: Optional[str],
 ):
@@ -61,6 +64,12 @@ def extract_corpora(
         ]
         counts = {word: 0 for word in words}
         for sentence in parse_sentences(fastsub_file):
+            if (
+                preferred_vocabulary is not None
+                and sentence.get_vocabulary_ratio(preferred_vocabulary)
+                < min_vocabulary_ratio
+            ):
+                continue
             for i, word in enumerate(words):
                 if counts[word] >= max_sentences:
                     continue
@@ -70,6 +79,7 @@ def extract_corpora(
 
 
 def generate_bundles(
+    *,
     file: TextIO,
     word: str,
     bundle_size: int,
@@ -102,6 +112,17 @@ def get_argument_parser() -> argparse.ArgumentParser:
         default=sys.stdin,
     )
     generate_parser.add_argument("--words", "-w", nargs="*")
+    generate_parser.add_argument(
+        "--preferred-vocabulary",
+        "-v",
+        type=argparse.FileType("r", encoding="utf-8"),
+    )
+    generate_parser.add_argument(
+        "--min-vocabulary-ratio",
+        "-r",
+        type=float,
+        default=0.8,
+    )
     generate_parser.add_argument("--max-sentences", "-s", type=int, default=math.inf)
     generate_parser.add_argument("--outfile-prefix", "-o")
 
@@ -122,9 +143,16 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     if args.command == "extract_corpora":
+        preferred_vocabulary = []
+        if args.preferred_vocabulary is not None:
+            preferred_vocabulary = [
+                line.strip() for line in args.preferred_vocabulary if line.strip()
+            ]
         extract_corpora(
             fastsub_file=args.file,
             words=args.words,
+            preferred_vocabulary=preferred_vocabulary,
+            min_vocabulary_ratio=args.min_vocabulary_ratio,
             max_sentences=args.max_sentences,
             outfile_prefix=args.outfile_prefix,
         )

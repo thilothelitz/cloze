@@ -6,7 +6,7 @@ class ProbabilityDistribution:
     def __init__(
         self,
         probabilities: Dict[str, float],
-        unk_probability: float = -math.inf,
+        unk_probability: float = -1000,
     ):
         self._probabilities = probabilities
         self._unk_probability = unk_probability
@@ -64,13 +64,20 @@ class Sentence:
         return Gap(self, index)
 
     def to_fastsubs(self) -> str:
-        return '\n'.join(
-            word + '\t' + '\t'.join(
-                f'{subword} {probability}'
-                for subword, probability in distribution
+        return (
+            "\n".join(
+                word
+                + "\t"
+                + "\t".join(
+                    f"{subword} {probability}" for subword, probability in distribution
+                )
+                for word, distribution in zip(self.words, self.distributions)
             )
-            for word, distribution in zip(self.words, self.distributions)
-        ) + '\n</s>\n'
+            + "\n</s>\n"
+        )
+
+    def get_vocabulary_ratio(self, vocabulary: List[str]) -> float:
+        return sum(word in vocabulary for word in self.words) / len(self.words)
 
 
 class Gap:
