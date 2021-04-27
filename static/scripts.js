@@ -51,11 +51,11 @@ async function getNewBundle() {
 function evaluate() {
     // Evaluate input and update class
 
-    // Actually get guess element, hope it still works
-    guess = document.getElementById("guess");
+    // From the element, get text, lowercase it, remove whitespace
+    guess = document.getElementById("guess").value.toLowerCase().trim();
     currentBundle = getTopMostBundle();
 
-    if (guess.value.toLowerCase() === targetWord) {
+    if (guess === targetWord) {
         alert("Wow you're fucking amazing");
         currentBundle.classList.add("correct")
         successes++;
@@ -70,6 +70,13 @@ function evaluate() {
         alert("You've done 10 exercises and got " + successes + " right");
         tries = 0;
     }
+
+    // Put user input into gaps
+    gaps = currentBundle.getElementsByClassName("gap")
+    for (let gap of gaps) {
+        gap.innerHTML = guess
+    }
+
     getNewBundle();
 }
 
