@@ -143,7 +143,7 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     if args.command == "extract_corpora":
-        preferred_vocabulary = []
+        preferred_vocabulary = None
         if args.preferred_vocabulary is not None:
             preferred_vocabulary = [
                 line.strip() for line in args.preferred_vocabulary if line.strip()
