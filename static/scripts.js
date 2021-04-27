@@ -1,14 +1,11 @@
-targetWord = "care";
+let targetWord = "care";
+let tries = 0;
+let successes = 0;
 
 // Check input if user presses enter
 document.addEventListener("keydown", async function(event) {
     if (event.key == "Enter") {
-        // No idea how js gets the "guess" element but it works?
-        if (guess.value.toLowerCase() === targetWord) {
-            alert("Wow you're fucking amazing");
-            sleep(1000);
-            getNewBundle();
-        }
+        evaluate();
     }
 });
 
@@ -29,7 +26,6 @@ async function getNewBundle() {
     // Expected JSON structure example:
     // bundle.target = "care"
     // bundle.sent_1_left = "I don't"
-    // bundle.sent_1_gap = "care"
     // bundle.sent_1_right = "!"
     // And so on for all 4 sentences
 
@@ -50,6 +46,42 @@ async function getNewBundle() {
         rowDiv = makeRow(colsForOneRow)
         bundleDiv.append(rowDiv)
     }
+}
+
+function evaluate() {
+    // Evaluate input and update class
+
+    // Actually get guess element, hope it still works
+    guess = document.getElementById("guess");
+    currentBundle = getTopMostBundle();
+
+    if (guess.value.toLowerCase() === targetWord) {
+        alert("Wow you're fucking amazing");
+        currentBundle.classList.add("correct")
+        successes++;
+    } else {
+        alert("Wow you're fucking dumb");
+        currentBundle.classList.add("incorrect");
+    }
+
+    tries++;
+    if (tries === 10) {
+        // TODO
+        alert("You've done 10 exercises and got " + successes + " right");
+        tries = 0;
+    }
+    getNewBundle();
+}
+
+function changeTopBundleGapText(str) {
+    // Changes the text of all gaps in the topmost bundle to str
+    // Select topmost bundle with getTopMostBundle()
+}
+
+function getTopMostBundle() {
+    let bundles = document.getElementsByClassName('bundle');
+    let topMostBundle = bundles[0];
+    return topMostBundle;
 }
 
 function makeRow(cols) {
