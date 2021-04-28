@@ -48,6 +48,7 @@ def extract_corpora(
     words: List[str],
     preferred_vocabulary: List[str],
     min_vocabulary_ratio: float,
+    max_sentence_length: int,
     max_sentences: int,
     outfile_prefix: Optional[str],
 ):
@@ -65,11 +66,18 @@ def extract_corpora(
         counts = {word: 0 for word in words}
         for sentence in parse_sentences(fastsub_file):
             if (
+                max_sentence_length is not None
+                and len(sentence.words) > max_sentence_length
+            ):
+                continue
+
+            if (
                 preferred_vocabulary is not None
                 and sentence.get_vocabulary_ratio(preferred_vocabulary)
                 < min_vocabulary_ratio
             ):
                 continue
+
             for i, word in enumerate(words):
                 if counts[word] >= max_sentences:
                     continue
@@ -123,6 +131,11 @@ def get_argument_parser() -> argparse.ArgumentParser:
         type=float,
         default=0.8,
     )
+    generate_parser.add_argument(
+        "--max-sentence-length",
+        "-r",
+        type=int,
+    )
     generate_parser.add_argument("--max-sentences", "-s", type=int, default=math.inf)
     generate_parser.add_argument("--outfile-prefix", "-o")
 
@@ -153,6 +166,7 @@ if __name__ == "__main__":
             words=args.words,
             preferred_vocabulary=preferred_vocabulary,
             min_vocabulary_ratio=args.min_vocabulary_ratio,
+            max_sentence_length=args.max_sentence_length,
             max_sentences=args.max_sentences,
             outfile_prefix=args.outfile_prefix,
         )
