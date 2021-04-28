@@ -92,28 +92,33 @@ def generate_bundles(
     file: TextIO,
     word: str,
     bundle_size: int,
+    number: int,
 ):
     corpus = load_corpus(file)
     sentences = list(corpus[word])
     if len(sentences) < bundle_size:
         raise RuntimeError(f"Only {len(sentences)} sentences for '{word}'")
     random.shuffle(list(sentences))
-    seed_gap = sentences.pop().gapify(word)
-    bundle = [seed_gap]
-    disambiguations = [joint_disambiguation_measure(bundle)]
-    for _ in range(bundle_size - 1):
-        next_gap, disambiguation = next_best_gap(bundle, sentences)
-        bundle.append(next_gap)
-        disambiguations.append(disambiguation)
-    # for gap, disambiguation in zip(bundle, disambiguations):
-    #     print(gap, disambiguation)
-    data = {
-        "target": word,
-    }
-    for i, gap in enumerate(bundle):
-        data[f"sent_{i + 1}_left"] = gap.part_before
-        data[f"sent_{i + 1}_right"] = gap.part_after
-    print(json.dumps(data))
+    for _ in range(number):
+        seed_gap = sentences.pop().gapify(word)
+        bundle = [seed_gap]
+        disambiguations = [joint_disambiguation_measure(bundle)]
+        for _ in range(bundle_size - 1):
+            next_gap, disambiguation = next_best_gap(bundle, sentences)
+            if next_gap is not None:
+                bundle.append(next_gap)
+                disambiguations.append(disambiguation)
+        if len(bundle) < bundle_size:
+            break
+        # for gap, disambiguation in zip(bundle, disambiguations):
+        #     print(gap, disambiguation)
+        data = {
+            "target": word,
+        }
+        for i, gap in enumerate(bundle):
+            data[f"sent_{i + 1}_left"] = gap.part_before
+            data[f"sent_{i + 1}_right"] = gap.part_after
+        print(json.dumps(data))
 
 
 def get_argument_parser() -> argparse.ArgumentParser:
@@ -155,7 +160,8 @@ def get_argument_parser() -> argparse.ArgumentParser:
         default=sys.stdin,
     )
     generate_parser.add_argument("--word", "-w", required=True)
-    generate_parser.add_argument("--bundle-size", "-n", type=int, required=True)
+    generate_parser.add_argument("--bundle-size", "-b", type=int, required=True)
+    generate_parser.add_argument("--number", "-n", type=int, default=1)
 
     return parser
 
@@ -183,4 +189,5 @@ if __name__ == "__main__":
             file=args.file,
             word=args.word,
             bundle_size=args.bundle_size,
+            number=args.number,
         )
