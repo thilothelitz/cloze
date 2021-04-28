@@ -1,6 +1,8 @@
 import math
 from typing import Dict, Iterator, List, Tuple
 
+from bundledgaps.util import detokenize
+
 
 class ProbabilityDistribution:
     def __init__(
@@ -98,6 +100,14 @@ class Gap:
     @property
     def gap_word(self):
         return self.sentence.words[self.index]
+
+    @property
+    def part_before(self):
+        return detokenize(self.sentence.words[: self.index])
+
+    @property
+    def part_after(self):
+        return detokenize(self.sentence.words[self.index + 1 :])
 
 
 def joint_disambiguation_measure(bundle: List[Gap]):

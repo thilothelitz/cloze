@@ -1,4 +1,5 @@
 import argparse
+import json
 import math
 import random
 import sys
@@ -104,8 +105,15 @@ def generate_bundles(
         next_gap, disambiguation = next_best_gap(bundle, sentences)
         bundle.append(next_gap)
         disambiguations.append(disambiguation)
-    for gap, disambiguation in zip(bundle, disambiguations):
-        print(gap, disambiguation)
+    # for gap, disambiguation in zip(bundle, disambiguations):
+    #     print(gap, disambiguation)
+    data = {
+        "target": word,
+    }
+    for i, gap in enumerate(bundle):
+        data[f"sent_{i + 1}_left"] = gap.part_before
+        data[f"sent_{i + 1}_right"] = gap.part_after
+    print(json.dumps(data))
 
 
 def get_argument_parser() -> argparse.ArgumentParser:
