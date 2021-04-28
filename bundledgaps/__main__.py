@@ -133,7 +133,7 @@ def get_argument_parser() -> argparse.ArgumentParser:
     )
     generate_parser.add_argument(
         "--max-sentence-length",
-        "-r",
+        "-l",
         type=int,
     )
     generate_parser.add_argument("--max-sentences", "-s", type=int, default=math.inf)
