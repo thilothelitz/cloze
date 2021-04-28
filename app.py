@@ -8,7 +8,7 @@ Use terminal command "flask run" for dev server
 import random
 from pathlib import Path
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -28,6 +28,7 @@ def gaps():
 
 @app.route("/bundle", methods=["GET"])
 def bundle():
-    with open(DATA_PATH / "bundles" / "A1.NN.jsonl") as bundles:
+    level = request.args["level"]
+    with open(DATA_PATH / "bundles" / f"{level}.jsonl") as bundles:
         jsons = bundles.readlines()
     return random.choice(jsons)
