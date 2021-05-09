@@ -1,16 +1,12 @@
 let targetWord = "care";
 let tries = 0;
 let successes = 0;
-let currentLevel = "A1";
+let currentLevel = "C1";
 
-// I can still access this without a getElementByID?
+// The input field calls this function on any input
 function updateTopGaps() {
     guess = document.getElementById("guess").value.toLowerCase().trim();
     changeTopBundleGapText(guess);
-    // Does this work lol
-    // no
-    // The above throws an error which stops gaps from updating I think
-    // .catch();
 }
 
 // Check input if user presses enter
@@ -97,7 +93,7 @@ function changeTopBundleGapText(str) {
     topBundle = getTopMostBundle();
     gaps = topBundle.getElementsByClassName("gap")
     for (let gap of gaps) {
-        gap.innerHTML = str;
+        gap.innerHTML = " " + str + " ";
     }
 }
 

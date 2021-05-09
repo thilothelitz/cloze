@@ -4,7 +4,7 @@ body {
 }
 
 .bundle {
-    padding: 20px;
+    padding: 0px;
 }
 
 .incorrect {
@@ -25,4 +25,8 @@ body {
 
 .right {
     text-align: left;
+}
+
+.gap {
+    word-wrap: break-word;
 }
