@@ -3,14 +3,15 @@ let tries = 0;
 let successes = 0;
 let currentLevel = "A1";
 
-// // I can still access this without a getElementByID?
-// guess.oninput = function() {
-//     changeTopBundleGapText(guess.value.toLowerCase().trim())
-//     // Does this work lol
-//     // no
-//     // The above throws an error which stops gaps from updating I think
-//     // .catch();
-// }
+// I can still access this without a getElementByID?
+function updateTopGaps() {
+    guess = document.getElementById("guess").value.toLowerCase().trim();
+    changeTopBundleGapText(guess);
+    // Does this work lol
+    // no
+    // The above throws an error which stops gaps from updating I think
+    // .catch();
+}
 
 // Check input if user presses enter
 document.addEventListener("keydown", async function(event) {
