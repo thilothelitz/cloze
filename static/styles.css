@@ -4,7 +4,11 @@ body {
 }
 
 .bundle {
-    padding: 0px;
+    padding: 20px;
+}
+
+.row {
+    padding: 5px;
 }
 
 .incorrect {
