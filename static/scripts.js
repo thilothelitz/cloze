@@ -81,10 +81,11 @@ function evaluate() {
     // Put user input into gaps
     gaps = currentBundle.getElementsByClassName("gap")
     for (let gap of gaps) {
-        gap.innerHTML = guess
+        gap.innerHTML = cleaned(targetWord)
     }
 
     getNewBundle();
+    document.getElementById("guess").value = ""
 }
 
 function changeTopBundleGapText(str) {
@@ -93,7 +94,7 @@ function changeTopBundleGapText(str) {
     topBundle = getTopMostBundle();
     gaps = topBundle.getElementsByClassName("gap")
     for (let gap of gaps) {
-        gap.innerHTML = " " + str + " ";
+        gap.innerHTML = " " + cleaned(str) + " ";
     }
 }
 
@@ -113,15 +114,15 @@ function makeRow(cols) {
         colDiv = document.createElement("div");
         switch (i) {
             case 0:
-                colDiv.className = "col left";
+                colDiv.className = "col left d-flex align-items-center justify-content-end text-wrap";
                 colDiv.innerHTML = cols[0];
                 break;
             case 1:
-                colDiv.className = "col-1 gap";
+                colDiv.className = "col-1 gap border-bottom d-flex align-items-center justify-content-center text-wrap";
                 colDiv.innerHTML = "";
                 break;
             case 2:
-                colDiv.className = "col right";
+                colDiv.className = "col right d-flex align-items-center justify-content-start text-wrap";
                 colDiv.innerHTML = cols[1];
                 break;
         }
@@ -129,6 +130,13 @@ function makeRow(cols) {
     }
 
     return rowDiv;
+}
+
+function cleaned(str) {
+    if (str.length > 10) {
+        str = str.slice(0, 8) + "..."
+    }
+    return str
 }
 
 function sleep(ms) {
