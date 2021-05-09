@@ -1,6 +1,16 @@
 let targetWord = "care";
 let tries = 0;
 let successes = 0;
+let currentLevel = "A1";
+
+// // I can still access this without a getElementByID?
+// guess.oninput = function() {
+//     changeTopBundleGapText(guess.value.toLowerCase().trim())
+//     // Does this work lol
+//     // no
+//     // The above throws an error which stops gaps from updating I think
+//     // .catch();
+// }
 
 // Check input if user presses enter
 document.addEventListener("keydown", async function(event) {
@@ -10,7 +20,7 @@ document.addEventListener("keydown", async function(event) {
 });
 
 async function getNewBundle() {
-    let url = "/bundle";
+    let url = "/bundle?level=" + currentLevel;
     let response = await fetch(url, {method: "GET"})
     // Check for promise and http errors
     .catch(err => alert("Error b/c of promise rejection: ".concat(err)));
@@ -83,6 +93,11 @@ function evaluate() {
 function changeTopBundleGapText(str) {
     // Changes the text of all gaps in the topmost bundle to str
     // Select topmost bundle with getTopMostBundle()
+    topBundle = getTopMostBundle();
+    gaps = topBundle.getElementsByClassName("gap")
+    for (let gap of gaps) {
+        gap.innerHTML = str;
+    }
 }
 
 function getTopMostBundle() {
