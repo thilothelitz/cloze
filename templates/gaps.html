@@ -3,50 +3,50 @@
 {% block main %}
 
 <p>What word belongs in the gap?</p>
-<input type="text" id="guess" autofocus>
+<input type="text" id="guess" oninput="updateTopGaps()" autofocus>
 
 <div class="buffer"></div>
 
 <div class="bundles">
     <div class="bundle">
-        <div class="row">
+        <div class="row g-0">
             <div class="col left" id="sent_1_left">
                 I don't 
             </div>
-            <div class="col-1 gap" id="sent_1_gap">
+            <div class="col-1 gap border-bottom" id="sent_1_gap">
                 care
             </div>
             <div class="col right" id="sent_1_right">
                 !
             </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <div class="col left" id="sent_2_left">
                 Subscribe for more skin
             </div>
-            <div class="col-1 gap" id="sent_2_gap">
+            <div class="col-1 gap border-bottom" id="sent_2_gap">
                 care
             </div>
             <div class="col right" id="sent_2_right">
                 videos.
             </div>
         </div>
-        <div class="row">
-            <div class="col left" id="sent_3_left">
-                There are 14 kittens in our
+        <div class="row g-0">
+            <div class="col left d-flex align-items-center justify-content-center text-wrap" id="sent_3_left">
+                There are 14 kittens in our There are 14 kittens in our There are 14 kittens in our There are 14 kittens in our There are 14 kittens in our
             </div>
-            <div class="col-1 gap" id="sent_3_gap">
+            <div class="col-1 gap border-bottom d-flex align-items-center justify-content-center text-wrap" id="sent_3_gap">
                 care
             </div>
             <div class="col right" id="sent_3_right">
                 .
             </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <div class="col left" id="sent_4_left">
                 Do you even 
             </div>
-            <div class="col-1 gap" id="sent_4_gap">
+            <div class="col-1 gap border-bottom" id="sent_4_gap">
                 care
             </div>
             <div class="col right" id="sent_4_right">
