@@ -76,9 +76,16 @@ function evaluate() {
 
     tries++;
     if (tries === triesUntilChange) {
-        // TODO
         alert("You've done " + triesUntilChange + " exercises and got " + successes + " right");
+        if (successes / triesUntilChange > 0.6) {
+            alert("Level up");
+            changeLevel(increase=true);
+        } else {
+            alert("Level down");
+            changeLevel(increase=false);
+        }
         tries = 0;
+        successes = 0;
     }
 
     // Put user input into gaps
@@ -133,6 +140,44 @@ function makeRow(cols) {
     }
 
     return rowDiv;
+}
+
+function changeLevel(increase) {
+    if (increase) {
+        switch (currentLevel) {
+            case "A1":
+                currentLevel = "A2";
+                break;
+            case "A2":
+                currentLevel = "B1";
+                break;
+            case "B1":
+                currentLevel = "B2";
+                break;
+            case "B2":
+                currentLevel = "C1";
+                break;
+            case "C1":
+                break;
+        }
+    } else {
+        switch (currentLevel) {
+            case "A1":
+                break;
+            case "A2":
+                currentLevel = "A1";
+                break;
+            case "B1":
+                currentLevel = "A2";
+                break;
+            case "B2":
+                currentLevel = "B1";
+                break;
+            case "C1":
+                currentLevel = "B2";
+                break;
+        }
+    }    
 }
 
 function cleaned(str) {
