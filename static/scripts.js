@@ -2,7 +2,7 @@ let targetWord = "care";
 let tries = 0;
 let triesUntilChange = 3;
 let successes = 0;
-let currentLevel = "C1";
+let currentLevel = "A2";
 
 window.onload = getNewBundle()
 
