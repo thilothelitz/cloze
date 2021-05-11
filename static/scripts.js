@@ -3,6 +3,8 @@ let tries = 0;
 let successes = 0;
 let currentLevel = "C1";
 
+window.onload = getNewBundle()
+
 // The input field calls this function on any input
 function updateTopGaps() {
     guess = document.getElementById("guess").value.toLowerCase().trim();
