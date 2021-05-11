@@ -15,16 +15,9 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 DATA_PATH = Path(__file__).resolve().parent / "data"
 
-
 @app.route("/")
-def main():
-    return render_template("main.html")
-
-
-@app.route("/gaps")
 def gaps():
     return render_template("gaps.html")
-
 
 @app.route("/bundle", methods=["GET"])
 def bundle():
