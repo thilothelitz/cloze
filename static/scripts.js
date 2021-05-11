@@ -66,22 +66,20 @@ function evaluate() {
     currentBundle = getTopMostBundle();
 
     if (guess === targetWord) {
-        alert("Wow you're fucking amazing");
         currentBundle.classList.add("correct")
         successes++;
     } else {
-        alert("Wow you're fucking dumb");
         currentBundle.classList.add("incorrect");
     }
 
     tries++;
     if (tries === triesUntilChange) {
-        alert("You've done " + triesUntilChange + " exercises and got " + successes + " right");
+        alert("You've done " + triesUntilChange + " exercises and got " + successes + " right!");
         if (successes / triesUntilChange > 0.6) {
-            alert("Level up");
+            alert("Level up 😎");
             changeLevel(increase=true);
         } else {
-            alert("Level down");
+            alert("Level down 😤");
             changeLevel(increase=false);
         }
         tries = 0;
