@@ -1,5 +1,6 @@
 let targetWord = "care";
 let tries = 0;
+let triesUntilChange = 3;
 let successes = 0;
 let currentLevel = "C1";
 
@@ -74,9 +75,9 @@ function evaluate() {
     }
 
     tries++;
-    if (tries === 10) {
+    if (tries === triesUntilChange) {
         // TODO
-        alert("You've done 10 exercises and got " + successes + " right");
+        alert("You've done " + triesUntilChange + " exercises and got " + successes + " right");
         tries = 0;
     }
 
